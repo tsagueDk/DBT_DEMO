@@ -5,20 +5,12 @@ with CTE AS (
     TO_TIMESTAMP(STARTED_AT) AS STARTED_AT,
     DATE (TO_TIMESTAMP(STARTED_AT)) AS DATE_STARTED_AT,
     HOUR (TO_TIMESTAMP(STARTED_AT)) AS HOUR_STARTED_AT,
-    CASE
-      WHEN DAYNAME(TO_TIMESTAMP(STARTED_AT)) in ('sat, sun') then 'WEEKEND'
-    ELSE
-      'BUSINESS_DAY'
+    
+    {{get_day_type('STARTED_AT')}} AS DAY_TYPE,
 
-    END AS DAY_TYPE,
+    {{get_saison('STARTED_AT')}} AS SAISION_TYPE,
 
-    CASE
-      WHEN MONTH (TO_TIMESTAMP(STARTED_AT)) in (12,1,2) then 'WINTER'
-      WHEN MONTH (TO_TIMESTAMP(STARTED_AT)) in (3,4,5) then 'SPRING'
-      WHEN MONTH (TO_TIMESTAMP(STARTED_AT)) in (6,7,8) then 'SUMMER'
-    ELSE 'AUTUMN'
-
-    END AS SAISON
+    {{function1('STARTED_AT')}} AS _func_state
 
      
 
