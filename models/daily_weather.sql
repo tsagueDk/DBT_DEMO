@@ -2,14 +2,13 @@ With daily_weather as (
     
     select 
     date(time) as daily_weather,
-    weather_main as weather,
+    weather,
     pressure,
     humidity,
     clouds
 
 
     from {{ source('demo', 'weather') }}
-    limit 100
 ),
 
 daily_weather_agg as (
@@ -25,6 +24,16 @@ daily_weather_agg as (
     group by daily_weather, weather
     qualify ROW_NUMBER() OVER (PARTITION BY daily_weather ORDER BY count(weather) desc ) = 1
 
+),
+
+daily_by_year as (
+    select *,
+    YEAR(daily_weather) as weather_year
+    from daily_weather_agg
+
+    order by daily_weather
+
+    
 )
 
-select * from daily_weather_agg
+select * from daily_by_year

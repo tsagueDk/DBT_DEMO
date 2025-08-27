@@ -2,7 +2,7 @@ With daily_weather as (
     
     select 
     date(time) as daily_weather,
-    weather_main as weather,
+    weather,
     pressure,
     humidity,
     clouds

@@ -4,7 +4,6 @@ WITH BIKE as (
     *
 
     from {{ source('demo', 'bike') }} 
-    where Ride_id != 'Ride_id'
 )
 
 select * from BIKE
