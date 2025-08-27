@@ -4,10 +4,8 @@
 {% endmacro %}
 
 {% macro get_day_type(x) %}
-  CASE
-      WHEN DAYNAME(TO_TIMESTAMP({{x}}) )in ('sat, sun') then 'WEEKEND'
-    ELSE
-      'BUSINESS_DAY'
-
+    CASE 
+        WHEN DAYNAME({{x}}) IN ('Sat', 'Sun') THEN 'WEEKEND'
+        ELSE 'BUSINESSDAY' 
     END
 {% endmacro %}
